@@ -43,14 +43,6 @@ function getFilter() {
     return "";
 }
 
-function filterEvents(events, filter) {
-    if (filter.length === 0) {
-        return events;
-    }
-
-    return events.filter((x) => x.type === filter);
-}
-
 async function fetchEvents(username) {
     const URL = `https://api.github.com/users/${username}/events?per_page=10`;
     const response = await fetch(URL, {
@@ -65,6 +57,14 @@ async function fetchEvents(username) {
     }
 
     return await response.json();
+}
+
+function filterEvents(events, filter) {
+    if (filter.length === 0) {
+        return events;
+    }
+
+    return events.filter((x) => x.type === filter);
 }
 
 function formatEvents(events) {
