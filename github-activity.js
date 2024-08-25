@@ -1,15 +1,13 @@
-// get username from argument
-// make request to github api to get events
-// handle errors like: invalid username, api failure, or any other
-// nicely format the output. consider using different font colors for different events?
-// *check the format of the data returned and see if we can pretty print the data.
 import FormatEvents from "./format";
+import { GitHubEvents } from "./event";
 
 async function main() {
     const username = getUsername();
+    const filter = getFilter();
 
     try {
-        const events = await fetchEvents(username);
+        let events = await fetchEvents(username);
+        events = filterEvents(events, filter);
         const formattedEvents = formatEvents(events);
 
         formattedEvents.forEach((event) => console.log(event));
@@ -19,7 +17,7 @@ async function main() {
 }
 
 function getUsername() {
-    const username = process.argv.splice(2, 1);
+    const username = process.argv[2];
     if (!username || username.length === 0) {
         console.error(
             `Please provide a username as a CLI argument. e.g: github-activity henrychris`
@@ -28,6 +26,29 @@ function getUsername() {
     }
 
     return username;
+}
+
+function getFilter() {
+    const eventFilter = process.argv[3];
+    if (eventFilter) {
+        if (!GitHubEvents[eventFilter]) {
+            throw new Error(
+                "Invalid event filter. Please provide an existing Github Event, e.g.: github-activity <username> PushEvent"
+            );
+        }
+
+        return eventFilter;
+    }
+
+    return "";
+}
+
+function filterEvents(events, filter) {
+    if (filter.length === 0) {
+        return events;
+    }
+
+    return events.filter((x) => x.type === filter);
 }
 
 async function fetchEvents(username) {
