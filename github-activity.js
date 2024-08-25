@@ -32,7 +32,7 @@ async function fetchEvents(username) {
     const response = await fetch(URL, {
         headers: {
             Accept: "application/vnd.github+json",
-            "User-Agent": "henrychris",
+            "User-Agent": username,
         },
     });
 
