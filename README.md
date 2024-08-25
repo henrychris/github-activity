@@ -24,4 +24,4 @@ Usage is simple.
 
 1. Ensure you have the GitHub CLI installed. You can get it here: [here](https://github.com/cli/cli).
 2. Open a terminal and run `gh auth login`. This will authenticate your system with GitHub.
-3. In the root directory of this project, run `bun github-activity.js <username>` or `node github-activity.js <username>`. <username> should be your GitHub username.
+3. In the root directory of this project, run `bun github-activity.js <username>` or `node github-activity.js <username>`. Replace `<username>` with be your GitHub username.
