@@ -146,22 +146,27 @@ export default class FormatEvents {
     //#region NOT IMPLEMENTED
 
     formatMemberEvent(event) {
+        // todo: implement this lol
         throw new Error("Not implemented");
     }
 
     formatPublicEvent(event) {
+        // todo: implement this lol
         throw new Error("Not implemented");
     }
 
     formatPullRequestReviewThreadEvent(event) {
+        // todo: implement this lol
         throw new Error("Not implemented");
     }
 
     formatReleaseEvent(event) {
+        // todo: implement this lol
         throw new Error("Not implemented");
     }
 
     formatSponsorshipEvent(event) {
+        // todo: implement this lol
         throw new Error("Not implemented");
     }
 
