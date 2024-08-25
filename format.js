@@ -1,22 +1,27 @@
 export default class FormatEvents {
-    COMMIT_COMMENT = "CommitCommentEvent";
-    CREATE = "CreateEvent";
-    DELETE = "DeleteEvent";
-    FORK = "ForkEvent";
-    GOLLUM = "GollumEvent";
-    ISSUE_COMMENT = "IssueCommentEvent";
-    ISSUE = "IssuesEvent";
-    MEMBER = "MemberEvent";
-    PUBLIC = "PublicEvent";
-    PULL_REQUEST = "PullRequestEvent";
-    PULL_REQUEST_REVIEW = "PullRequestReviewEvent";
-    PULL_REQUEST_REVIEW_COMMENT = "PullRequestReviewCommentEvent";
-    PULL_REQUEST_REVIEW_THREAD = "PullRequestReviewThreadEvent";
-    PUSH = "PushEvent";
-    RELEASE = "ReleaseEvent";
-    SPONSORSHIP = "SponsorshipEvent";
-    WATCH = "WatchEvent";
-
+    constructor() {
+        this.eventFormatters = {
+            CommitCommentEvent: this.formatCommitCommentEvent,
+            CreateEvent: this.formatCreateEvent,
+            DeleteEvent: this.formatDeleteEvent,
+            ForkEvent: this.formatForkEvent,
+            GollumEvent: this.formatGollumEvent,
+            IssueCommentEvent: this.formatIssueCommentEvent,
+            IssuesEvent: this.formatIssueEvent,
+            MemberEvent: this.formatMemberEvent,
+            PublicEvent: this.formatPublicEvent,
+            PullRequestEvent: this.formatPullRequestEvent,
+            PullRequestReviewEvent: this.formatPullRequestReviewEvent,
+            PullRequestReviewCommentEvent:
+                this.formatPullRequestReviewCommentEvent,
+            PullRequestReviewThreadEvent:
+                this.formatPullRequestReviewThreadEvent,
+            PushEvent: this.formatPushEvent,
+            ReleaseEvent: this.formatReleaseEvent,
+            SponsorshipEvent: this.formatSponsorshipEvent,
+            WatchEvent: this.formatWatchEvent,
+        };
+    }
     #getDate(dateString) {
         var date = new Date(dateString);
         return date.toLocaleString("en-UK", {
@@ -35,68 +40,12 @@ export default class FormatEvents {
         return `- [${formattedDate}]: ${event.actor.login}`;
     }
 
+    // return an array of strings. each string is a formatted summary of a GitHub event
     formatAllEvents(events) {
-        events.forEach((event, index) => {
-            switch (event.type) {
-                case this.COMMIT_COMMENT:
-                    events[index] = this.formatCommitCommentEvent(event);
-                    break;
-                case this.CREATE:
-                    events[index] = this.formatCreateEvent(event);
-                    break;
-                case this.DELETE:
-                    events[index] = this.formatDeleteEvent(event);
-                    break;
-                case this.FORK:
-                    events[index] = this.formatForkEvent(event);
-                    break;
-                case this.GOLLUM:
-                    events[index] = this.formatGollumEvent(event);
-                    break;
-                case this.ISSUE_COMMENT:
-                    events[index] = this.formatIssueCommentEvent(event);
-                    break;
-                case this.ISSUE:
-                    events[index] = this.formatIssueEvent(event);
-                    break;
-                case this.MEMBER:
-                    events[index] = this.formatMemberEvent(event);
-                    break;
-                case this.PUBLIC:
-                    events[index] = this.formatPublicEvent(event);
-                    break;
-                case this.PULL_REQUEST:
-                    events[index] = this.formatPullRequestEvent(event);
-                    break;
-                case this.PULL_REQUEST_REVIEW:
-                    events[index] = this.formatPullRequestReviewEvent(event);
-                    break;
-                case this.PULL_REQUEST_REVIEW_COMMENT:
-                    events[index] =
-                        this.formatPullRequestReviewCommentEvent(event);
-                    break;
-                case this.PULL_REQUEST_REVIEW_THREAD:
-                    events[index] =
-                        this.formatPullRequestReviewThreadEvent(event);
-                    break;
-                case this.PUSH:
-                    events[index] = this.formatPushEvent(event);
-                    break;
-                case this.RELEASE:
-                    events[index] = this.formatReleaseEvent(event);
-                    break;
-                case this.SPONSORSHIP:
-                    events[index] = this.formatSponsorshipEvent(event);
-                    break;
-                case this.WATCH:
-                    events[index] = this.formatWatchEvent(event);
-                    break;
-                default:
-                    break;
-            }
+        return events.map((event) => {
+            const formatter = this.eventFormatters[event.type];
+            return formatter ? formatter.call(this, event) : event;
         });
-
-        return events;
     }
 
     formatCommitCommentEvent(event) {
@@ -107,6 +56,11 @@ export default class FormatEvents {
     formatCreateEvent(event) {
         const prefix = this.#getPrefix(event);
         const obj_created = event.payload.ref_type;
+
+        if (obj_created === "repository") {
+            return `${prefix} created a ${obj_created}. Name: ${event.repo.name}. Repository URL: ${event.repo.url}`;
+        }
+
         return `${prefix} created a ${obj_created} in ${event.repo.name}. Repository URL: ${event.repo.url}`;
     }
 
