@@ -40,7 +40,7 @@ async function fetchEvents(username) {
     });
 
     if (!response.ok) {
-        throw new Error("Request failed.");
+        throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     return await response.json();
