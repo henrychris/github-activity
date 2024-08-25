@@ -4,26 +4,26 @@ import { GitHubEvents } from "./event";
 export default class FormatEvents {
     constructor() {
         this.eventFormatters = {
-            [GitHubEvents.COMMIT_COMMENT]: this.formatCommitCommentEvent,
-            [GitHubEvents.CREATE]: this.formatCreateEvent,
-            [GitHubEvents.DELETE]: this.formatDeleteEvent,
-            [GitHubEvents.FORK]: this.formatForkEvent,
-            [GitHubEvents.GOLLUM]: this.formatGollumEvent,
-            [GitHubEvents.ISSUE_COMMENT]: this.formatIssueCommentEvent,
-            [GitHubEvents.ISSUE]: this.formatIssueEvent,
-            [GitHubEvents.MEMBER]: this.formatMemberEvent,
-            [GitHubEvents.MEMBER]: this.formatPublicEvent,
-            [GitHubEvents.PULL_REQUEST]: this.formatPullRequestEvent,
-            [GitHubEvents.PULL_REQUEST_REVIEW]:
+            [GitHubEvents.CommitCommentEvent]: this.formatCommitCommentEvent,
+            [GitHubEvents.CreateEvent]: this.formatCreateEvent,
+            [GitHubEvents.DeleteEvent]: this.formatDeleteEvent,
+            [GitHubEvents.ForkEvent]: this.formatForkEvent,
+            [GitHubEvents.GollumEvent]: this.formatGollumEvent,
+            [GitHubEvents.IssueCommentEvent]: this.formatIssueCommentEvent,
+            [GitHubEvents.IssuesEvent]: this.formatIssueEvent,
+            [GitHubEvents.MemberEvent]: this.formatMemberEvent,
+            [GitHubEvents.MemberEvent]: this.formatPublicEvent,
+            [GitHubEvents.PullRequestEvent]: this.formatPullRequestEvent,
+            [GitHubEvents.PullRequestReviewEvent]:
                 this.formatPullRequestReviewEvent,
-            [GitHubEvents.PULL_REQUEST_REVIEW_COMMENT]:
+            [GitHubEvents.PullRequestReviewCommentEvent]:
                 this.formatPullRequestReviewCommentEvent,
-            [GitHubEvents.PULL_REQUEST_REVIEW_THREAD]:
+            [GitHubEvents.PullRequestReviewThreadEvent]:
                 this.formatPullRequestReviewThreadEvent,
-            [GitHubEvents.PUSH]: this.formatPushEvent,
-            [GitHubEvents.RELEASE]: this.formatReleaseEvent,
-            [GitHubEvents.SPONSORSHIP]: this.formatSponsorshipEvent,
-            [GitHubEvents.WATCH]: this.formatWatchEvent,
+            [GitHubEvents.PushEvent]: this.formatPushEvent,
+            [GitHubEvents.ReleaseEvent]: this.formatReleaseEvent,
+            [GitHubEvents.SponsorshipEvent]: this.formatSponsorshipEvent,
+            [GitHubEvents.WatchEvent]: this.formatWatchEvent,
         };
     }
     #getDate(dateString) {
