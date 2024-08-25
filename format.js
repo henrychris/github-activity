@@ -105,14 +105,6 @@ export default class FormatEvents {
         return `${prefix} ${action} issue #${event.payload.issue.number} in repository ${event.repo.name}. Issue URL: ${event.payload.issue.html_url}`;
     }
 
-    formatMemberEvent(event) {
-        throw new Error("Not implemented");
-    }
-
-    formatPublicEvent(event) {
-        throw new Error("Not implemented");
-    }
-
     formatPullRequestEvent(event) {
         const prefix = this.#getPrefix(event);
         const action = event.payload.action;
@@ -134,16 +126,31 @@ export default class FormatEvents {
         return `${prefix} ${action} a review comment on PR #${event.payload.number} in repository ${event.repo.name}. PR URL: ${event.payload.pull_request.html_url}`;
     }
 
-    formatPullRequestReviewThreadEvent(event) {
-        throw new Error("Not implemented");
-    }
-
     formatPushEvent(event) {
         const commitCount = event.payload.size;
         const commitLabel = commitCount === 1 ? "commit" : "commits";
         const prefix = this.#getPrefix(event);
 
         return `${prefix} pushed ${commitCount} ${commitLabel} to ${event.repo.name}.`;
+    }
+
+    formatWatchEvent(event) {
+        const prefix = this.#getPrefix(event);
+        return `${prefix} started watching ${event.repo.name}.`;
+    }
+
+    //#region NOT IMPLEMENTED
+
+    formatMemberEvent(event) {
+        throw new Error("Not implemented");
+    }
+
+    formatPublicEvent(event) {
+        throw new Error("Not implemented");
+    }
+
+    formatPullRequestReviewThreadEvent(event) {
+        throw new Error("Not implemented");
     }
 
     formatReleaseEvent(event) {
@@ -154,8 +161,5 @@ export default class FormatEvents {
         throw new Error("Not implemented");
     }
 
-    formatWatchEvent(event) {
-        const prefix = this.#getPrefix(event);
-        return `${prefix} started watching ${event.repo.name}.`;
-    }
+    //#endregion
 }
