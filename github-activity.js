@@ -39,12 +39,11 @@ async function fetchEvents(username) {
         },
     });
 
-    if (response.ok) {
-        var resJson = await response.json();
-        return resJson;
+    if (!response.ok) {
+        throw new Error("Request failed.");
     }
 
-    throw new Error("Request failed.");
+    return await response.json();
 }
 
 function formatEvents(events) {
