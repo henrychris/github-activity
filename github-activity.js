@@ -7,8 +7,12 @@
 async function main() {
     const username = getUsername();
 
-    const events = await fetchEvents(username);
-    events.forEach((event) => console.log(`Event: ${event}.`));
+    try {
+        const events = await fetchEvents(username);
+        events.forEach((event) => console.log(event));
+    } catch (error) {
+        console.error(error.message);
+    }
 }
 
 function getUsername() {
@@ -19,12 +23,25 @@ function getUsername() {
         );
         process.exit(1);
     }
-    console.log(`Username: ${username}`);
+
+    return username;
 }
 
 async function fetchEvents(username) {
-    const URL = `https://api.github.com/users/${username}/events`;
-    return ["committed some stuff"];
+    const URL = `https://api.github.com/users/${username}/events?per_page=10`;
+    const response = await fetch(URL, {
+        headers: {
+            Accept: "application/vnd.github+json",
+            "User-Agent": "henrychris",
+        },
+    });
+
+    if (response.ok) {
+        var resJson = await response.json();
+        return resJson;
+    }
+
+    throw new Error("Request failed.");
 }
 
 await main();
