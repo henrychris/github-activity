@@ -74,4 +74,4 @@ function formatEvents(events) {
     return formatter.formatAllEvents(events);
 }
 
-await main();
+main().catch((error) => console.error(error));
