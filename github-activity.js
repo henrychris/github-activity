@@ -1,5 +1,3 @@
-// import FormatEvents from "./format";
-// import { GitHubEvents } from "./event";
 const FormatEvents = require("./format");
 const GitHubEvents = require("./event");
 
