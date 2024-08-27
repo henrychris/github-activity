@@ -1,4 +1,4 @@
-export const GitHubEvents = {
+module.exports = GitHubEvents = {
     CommitCommentEvent: "CommitCommentEvent",
     CreateEvent: "CreateEvent",
     DeleteEvent: "DeleteEvent",

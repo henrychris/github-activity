@@ -1,7 +1,7 @@
 // objects gotta be imported this way
-import { GitHubEvents } from "./event";
+const GitHubEvents = require("./event");
 
-export default class FormatEvents {
+module.exports = class FormatEvents {
     constructor() {
         this.eventFormatters = {
             [GitHubEvents.CommitCommentEvent]: this.formatCommitCommentEvent,
@@ -171,4 +171,4 @@ export default class FormatEvents {
     }
 
     //#endregion
-}
+};
